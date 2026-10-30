@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+// Keep your other existing imports below
 import {
   Search, Plus, MapPin, CalendarDays, Package, ShieldCheck, ArrowRight,
   X, Upload, LogIn, LogOut, UserRound, Clock3, CheckCircle2, AlertCircle,
