@@ -303,6 +303,14 @@ function DetailModal({ item, onClose, user, onNotice, refresh }) {
 }
 
 export default function App() {
+    const [theme, setTheme] = useState(
+    () => localStorage.getItem("foundit-theme") || "light"
+  );
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("foundit-theme", theme);
+  }, [theme]);
   const [session, setSession] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [items, setItems] = useState(DEMO_ITEMS);
@@ -385,6 +393,15 @@ export default function App() {
               <span className="user-chip"><span className="avatar">{initials(user.user_metadata?.full_name || user.email)}</span><span className="user-email">{user.user_metadata?.full_name || user.email}</span></span>
               <button className="btn btn-outline signout-btn" onClick={signOut}><LogOut size={16} /> Sign out</button>
             </> : <button className="btn btn-outline" onClick={() => isSupabaseConfigured ? setModal("auth") : notify("Add your Supabase URL and key to .env.local to enable sign in.", "error")}><LogIn size={16} /> Sign in</button>}
+            <button
+  className="theme-toggle"
+  onClick={() =>
+    setTheme((current) => current === "light" ? "dark" : "light")
+  }
+  aria-label="Toggle light and dark theme"
+>
+  {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+</button>
             <button className="btn btn-primary post-button" onClick={() => user ? setModal("item") : isSupabaseConfigured ? setModal("auth") : notify("Connect Supabase first to publish live listings.", "error")}><Plus size={17} /> Post an item</button>
             <button className="icon-button mobile-menu" onClick={() => setMenuOpen((v) => !v)} aria-label="Toggle menu"><Menu size={20} /></button>
           </div>
